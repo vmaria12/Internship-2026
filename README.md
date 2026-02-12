@@ -1,18 +1,28 @@
 # Internship-2026
 
-Demo
+
 
 
 
 ✅ http://localhost:8080/swagger-ui.html
 
+--------
+
+\##### Links
+
+
+
+🚀**Tailwind:** https://pagedone.io/docs/grids
+
+
+
+---------
 
 
 
 
 
-
-Use cases:
+\#### Use cases:
 
 
 
