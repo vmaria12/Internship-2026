@@ -46,4 +46,10 @@ public class CourseController {
         courseService.deleteCourse(id);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/{courseId}/add-lecture/{lessonId}")
+    public ResponseEntity <Void> addLessonToCourse(@PathVariable UUID courseId, @PathVariable UUID lessonId){
+        courseService.addLessonToCourse(courseId,lessonId);
+        return ResponseEntity.noContent().build();
+    }
 }

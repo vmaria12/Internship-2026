@@ -1,22 +1,27 @@
 package com.example.be.course.service;
 
-import com.example.be.coursant.dto.CreateCoursantDto;
 import com.example.be.course.dto.CourseDto;
 import com.example.be.course.dto.CreateCourseDto;
 import com.example.be.course.dto.UpdateCourseDto;
 import com.example.be.course.entity.CourseEntity;
 import com.example.be.course.repository.CourseRepository;
+import com.example.be.lesson.entity.LessonEntity;
+import com.example.be.lesson.repository.LessonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository) {
         this.courseRepository = courseRepository;
+        this.lessonRepository = lessonRepository;
     }
 
     //CRUD
@@ -35,6 +40,7 @@ public class CourseService {
             .id(courseEntity.getId())
             .description(courseEntity.getDescription())
             .title(courseEntity.getTitle())
+            .lessons(courseEntity.getLessons())
             .build();
     }
 
@@ -45,6 +51,7 @@ public class CourseService {
                 .id(courseEntity.getId())
                 .title(courseEntity.getTitle())
                 .description(courseEntity.getDescription())
+                .lessons(courseEntity.getLessons())
                 .build()).toList();
     }
 
@@ -66,5 +73,19 @@ public class CourseService {
     public void deleteCourse(UUID id){
         var courseEntity = courseRepository.findById(id).orElseThrow(()-> new RuntimeException("Wr cannot found this course"));
         courseRepository.delete(courseEntity);
+    }
+
+    // Add lesson to course
+    @Transactional
+    public void addLessonToCourse(UUID courseId, UUID lessonId) {
+        // 1. Căutăm entitățile
+        CourseEntity course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Nu s-a gasit cursul"));
+        LessonEntity lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new RuntimeException("Nu s-a gasit Lectia"));
+
+        course.getLessons().add(lesson);
+
+        courseRepository.save(course);
     }
 }

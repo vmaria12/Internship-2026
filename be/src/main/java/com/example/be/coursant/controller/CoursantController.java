@@ -37,4 +37,11 @@ public class CoursantController {
        return ResponseEntity.noContent().build();
    }
 
+   @PostMapping("/{coursantId}/add-course/{courseId}")
+    public ResponseEntity <Void> addCourseToCoursant(@PathVariable UUID coursantId, @PathVariable UUID courseId){
+        coursantService.assignCourseToStudent(coursantId,courseId);
+        return ResponseEntity.noContent().build();
+   }
+
+
 }
