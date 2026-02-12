@@ -1,8 +1,8 @@
-package com.example.be.controller;
+package com.example.be.coursant.controller;
 
-import com.example.be.dto.CoursantDto;
-import com.example.be.dto.CreateCourseDto;
-import com.example.be.service.CoursantService;
+import com.example.be.coursant.dto.CoursantDto;
+import com.example.be.coursant.dto.CreateCoursantDto;
+import com.example.be.coursant.service.CoursantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +28,13 @@ public class CoursantController {
         return ResponseEntity.ok(coursantService.getById(id));
     }
    @PostMapping("/create")
-    public ResponseEntity<UUID> createCoursant(@RequestBody CreateCourseDto createCourseDto){
-        UUID id = coursantService.create(createCourseDto);
+    public ResponseEntity<UUID> createCoursant(@RequestBody CreateCoursantDto createCoursantDto){
+        UUID id = coursantService.create(createCoursantDto);
         return ResponseEntity.ok(id);
+   }
+   @DeleteMapping("/{id}")
+    public ResponseEntity <Void> deleteCoursant(@PathVariable(required = true)  UUID id){coursantService.deleteCoursant(id);
+       return ResponseEntity.noContent().build();
    }
 
 }

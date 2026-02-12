@@ -1,9 +1,9 @@
-package com.example.be.dto;
+package com.example.be.coursant.dto;
 
 import lombok.Builder;
 
 @Builder
-public record CreateCourseDto(
+public record CreateCoursantDto(
         String firstName,
         String lastName,
         Integer age

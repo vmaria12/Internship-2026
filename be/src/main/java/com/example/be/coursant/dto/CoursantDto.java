@@ -1,4 +1,4 @@
-package com.example.be.dto;
+package com.example.be.coursant.dto;
 
 import lombok.Builder;
 

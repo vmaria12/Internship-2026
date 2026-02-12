@@ -1,4 +1,4 @@
-package com.example.be.entity;
+package com.example.be.coursant.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
