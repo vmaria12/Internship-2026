@@ -8,12 +8,16 @@
 
 --------
 
-\##### Links
+\#####Links FE
 
 
 
-🚀**Tailwind:** https://pagedone.io/docs/grids
-
+Tailwind:** https://pagedone.io/docs/grids
+react hook form: https://ui.shadcn.com/docs/forms/react-hook-form
+tailwind: https://pagedone.io/docs/grids 
+lucide: https://lucide.dev/icons/ 
+colors: https://ui.shadcn.com/colors
+tipograpty: https://pagedone.io/docs/typography 
 
 
 ---------
@@ -22,7 +26,7 @@
 
 
 
-\#### Use cases:
+\####Use cases:
 
 
 
