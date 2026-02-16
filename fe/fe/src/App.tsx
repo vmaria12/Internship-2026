@@ -3,16 +3,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider, createRoute } from "@tanstack/react-router";
 import { Route as rootRoute } from "./root";
 import Welcome from "@/app/welcome/welcome";
+import { coursantRoute } from './app/coursant/layout';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
-const indexRoute = createRoute({
+export const welcomeRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/',
     component: Welcome,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute])
+const routeTree = rootRoute.addChildren([welcomeRoute, coursantRoute])
 
 const router = createRouter({
     routeTree,

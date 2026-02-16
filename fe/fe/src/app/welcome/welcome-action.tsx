@@ -1,13 +1,16 @@
 import { Card } from "@/components/ui/card"
+import { Link } from "@tanstack/react-router"
 import { BookOpen, CircleUser, LayoutGrid } from "lucide-react"
 
 const WelcomeAction = () => {
     return (
         <div className="grid grid-cols-3 gap-4">
             <Card className="p-2">
-                <h2 className="text-blue-400 font-semibold">Cursant</h2>
-                <CircleUser className="size-12 text-blue-400" />
-                <p>Adaugă, editează sau șterge cursanți</p>
+                <Link to="/coursants">
+                    <h2 className="text-blue-400 font-semibold">Cursant</h2>
+                    <CircleUser className="size-12 text-blue-400" />
+                    <p>Adaugă, editează sau șterge cursanți</p>
+                </Link>
             </Card>
             <Card className="p-2">
                 <h2 className="font-bold text-green-400">Cursuri</h2>

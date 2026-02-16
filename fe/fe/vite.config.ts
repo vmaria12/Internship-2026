@@ -9,7 +9,15 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(process.cwd(), "./src"),
+    },
+  },
+  server: {
+    proxy: {
+      '/coursant': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
     },
   },
 })
