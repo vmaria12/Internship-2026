@@ -30,10 +30,10 @@ const EditCoursantDialog = ({ id, coursant }: { id: string, coursant: Coursant }
 
 
     // mutation
-    const { mutateAsync: editCoursant } = useEditCoursantMutation()
+    const mutation = useEditCoursantMutation()
 
     const onSubmit = (data: EditCoursantForm) => {
-        editCoursant({ id, body: data })
+        mutation.mutate({ id, body: data })
         reset()
     }
 
@@ -62,7 +62,8 @@ const EditCoursantDialog = ({ id, coursant }: { id: string, coursant: Coursant }
                     </DialogHeader>
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button className="!bg-green-400 !text-black" type="submit"> <PencilIcon className="text-black" />Edit</Button>
+                            <Button className="!bg-green-400 !text-black" type="submit"> <PencilIcon className="text-black" />
+                                {mutation.isPending ? "Editing..." : "Edit"}</Button>
                         </DialogClose>
                     </DialogFooter>
                 </form>
