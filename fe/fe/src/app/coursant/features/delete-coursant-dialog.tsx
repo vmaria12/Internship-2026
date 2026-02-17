@@ -10,8 +10,8 @@ const DeleteCoursantDialog = ({ id }: { id: string }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>
-                    <TrashIcon className="text-red-400" />
+                <Button className="!bg-red-400 !rounded-full" >
+                    <TrashIcon className="text-white" />
                 </Button>
             </DialogTrigger>
             <DialogContent>

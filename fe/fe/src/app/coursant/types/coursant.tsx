@@ -13,3 +13,5 @@ export type CreateCoursantBody = {
     lastName: string,
     age: number,
 }
+
+export type EditCoursantBody = CreateCoursantBody;
