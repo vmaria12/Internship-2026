@@ -2,6 +2,7 @@ package com.example.be.coursant.service;
 
 import com.example.be.coursant.dto.CoursantDto;
 import com.example.be.coursant.dto.CreateCoursantDto;
+import com.example.be.coursant.dto.UpdateCoursantDto;
 import com.example.be.coursant.entity.CoursantEntity;
 import com.example.be.coursant.repository.CoursantRepository;
 import com.example.be.course.entity.CourseEntity;
@@ -61,6 +62,18 @@ public class CoursantService {
 
     public void deleteCoursant(UUID id){
         coursantRepository.deleteById(id);
+    }
+
+    // edit
+    public void editCoursant(UUID id, UpdateCoursantDto updateCoursantDto){
+        CoursantEntity coursantEntity = coursantRepository.findById(id).orElseThrow(()-> new RuntimeException("Not found"));
+        if(updateCoursantDto.firstName() !=null){
+            coursantEntity.setFirstName(updateCoursantDto.firstName());
+        }
+        if(updateCoursantDto.lastName()!=null){
+            coursantEntity.setLastName(updateCoursantDto.lastName());
+        }
+        coursantRepository.save(coursantEntity);
     }
 
 

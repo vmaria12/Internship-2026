@@ -2,6 +2,7 @@ package com.example.be.coursant.controller;
 
 import com.example.be.coursant.dto.CoursantDto;
 import com.example.be.coursant.dto.CreateCoursantDto;
+import com.example.be.coursant.dto.UpdateCoursantDto;
 import com.example.be.coursant.service.CoursantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,13 @@ public class CoursantController {
         UUID id = coursantService.create(createCoursantDto);
         return ResponseEntity.ok(id);
    }
+
+   @PatchMapping("/{id}")
+   public ResponseEntity<Void> updateCoursant(@PathVariable UUID id, @RequestBody UpdateCoursantDto updateCoursantDto){
+       coursantService.editCoursant(id, updateCoursantDto);
+        return ResponseEntity.noContent().build();
+   }
+
    @DeleteMapping("/{id}")
     public ResponseEntity <Void> deleteCoursant(@PathVariable(required = true)  UUID id){coursantService.deleteCoursant(id);
        return ResponseEntity.noContent().build();
