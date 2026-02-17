@@ -4,6 +4,7 @@ import useGetAllCoursants from "@/app/api/coursant/get-all-coursants";
 import { Cake } from "lucide-react";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { getInitials } from "../utils/coursant-initials";
+import DeleteCoursantDialog from "./delete-coursant-dialog";
 
 const CoursantGrid = () => {
     const { data, isLoading, isError } = useGetAllCoursants();
@@ -19,9 +20,11 @@ const CoursantGrid = () => {
                         </Avatar>
                         <CardTitle>{coursant.firstName} {coursant.lastName}</CardTitle>
                     </CardHeader>
-                    <CardFooter>
+                    <CardFooter className="flex flex-row items-center gap-2">
                         <Cake />
                         <p>{coursant.age}</p>
+                        <p>ani</p>
+                        <DeleteCoursantDialog id={coursant.id} />
                     </CardFooter>
                 </Card>
             ))}
