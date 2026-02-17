@@ -2,7 +2,7 @@ import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Coursant } from "../types/coursant";
 import useGetAllCoursants from "@/app/api/coursant/get-all-coursants";
 import { Cake } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { getInitials } from "../utils/coursant-initials";
 
 const CoursantGrid = () => {

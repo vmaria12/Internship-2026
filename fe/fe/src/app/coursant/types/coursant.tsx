@@ -7,3 +7,9 @@ export type Coursant = {
     age: number,
     coursesList: Course[],
 }
+
+export type CreateCoursantBody = {
+    firstName: string,
+    lastName: string,
+    age: number,
+}

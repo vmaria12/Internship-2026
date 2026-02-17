@@ -1,15 +1,20 @@
 import { Route as rootRoute } from "@/root"
-import { createRoute, getRouteApi } from "@tanstack/react-router"
-import useGetAllCoursants from "../api/coursant/get-all-coursants"
+import { createRoute } from "@tanstack/react-router"
 import CoursantGrid from "./features/coursant-grid"
+import CreateCoursantDialog from "./features/create-coursant-dialog"
 
-const route = getRouteApi('/coursants')
 
 const CoursantLayout = () => {
     return (
         <div className="h-screen w-screen p-12">
-            <h1 className="text-blue-400 font-semibold mb-4">Cursanți</h1>
+            <div className="flex justify-between">
+                <h1 className="text-blue-400 font-semibold mb-4">Cursanți</h1>
+                <CreateCoursantDialog />
+            </div>
+
             <CoursantGrid />
+
+
         </div>
     )
 }
