@@ -4,6 +4,10 @@ import com.example.be.course.dto.CourseDto;
 import com.example.be.course.dto.CreateCourseDto;
 import com.example.be.course.dto.UpdateCourseDto;
 import com.example.be.course.service.CourseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,21 @@ public class CourseController {
     @GetMapping("/all")
     public ResponseEntity<List<CourseDto>> getAllCourses(){
         return ResponseEntity.ok(courseService.getAllCourses());
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CourseDto>> getAllCourses(
+        @PageableDefault(page = 0, size = 10, sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(courseService.findAllPaginatedCourses(pageable));
+    }
+
+
+    @GetMapping("/v2-page")
+    public ResponseEntity<Page<CourseDto>> getByPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        // Corecție sintaxă ResponseEntity: folosim .ok() sau new ResponseEntity<>()
+        return ResponseEntity.ok(courseService.getByPage(page, size));
     }
 
     @GetMapping("/{id}")

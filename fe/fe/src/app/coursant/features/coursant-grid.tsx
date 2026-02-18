@@ -6,10 +6,14 @@ import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { getInitials } from "../utils/coursant-initials";
 import DeleteCoursantDialog from "./delete-coursant-dialog";
 import EditCoursantDialog from "./edit-coursant-dialog";
+import { Spinner } from "@/components/ui/spinner";
 
 const CoursantGrid = () => {
     const { data, isLoading, isError } = useGetAllCoursants();
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return
+    <div >
+        <Spinner />
+    </div>;
     if (isError) return <div>Error</div>;
     return (
         <div className="grid grid-cols-2 gap-4">

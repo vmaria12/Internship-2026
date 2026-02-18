@@ -9,6 +9,9 @@ import com.example.be.course.entity.CourseEntity;
 import com.example.be.course.repository.CourseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,10 +48,20 @@ public class CoursantService {
                 .firstName(coursantEntity.getFirstName())
                         .lastName(coursantEntity.getLastName())
                         .age(coursantEntity.getAge())
-
                         .id(coursantEntity.getId())
                         .coursesList(coursantEntity.getCourseList())
                         .build()).toList();
+    }
+
+    // ************* Paging -- Sorting
+    public Page<CoursantDto> getAllCoursantPaginated(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("firstName").ascending());
+        Page<CoursantEntity> coursantEntityPage = coursantRepository.findAll(pageRequest);
+        return coursantEntityPage.map(coursantEntity -> CoursantDto.builder()
+                .firstName(coursantEntity.getFirstName())
+                .lastName(coursantEntity.getLastName())
+                .id(coursantEntity.getId())
+                .build());
     }
 
     public UUID create(CreateCoursantDto createCoursantDto){

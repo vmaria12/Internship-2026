@@ -4,6 +4,7 @@ import com.example.be.coursant.dto.CoursantDto;
 import com.example.be.coursant.dto.CreateCoursantDto;
 import com.example.be.coursant.dto.UpdateCoursantDto;
 import com.example.be.coursant.service.CoursantService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,13 @@ public class CoursantController {
     @GetMapping("/all")
     public ResponseEntity<List<CoursantDto>> getAll(){
         return ResponseEntity.ok(coursantService.getAllCoursant());
+    }
+
+    @PostMapping("v2-/page")
+    public ResponseEntity<Page<CoursantDto>> getPaginatedCoursant(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
+        return ResponseEntity.ok(coursantService.getAllCoursantPaginated(page, size));
     }
 
     @GetMapping("/{id}")

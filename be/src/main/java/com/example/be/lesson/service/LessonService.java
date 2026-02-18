@@ -5,6 +5,10 @@ import com.example.be.lesson.dto.LessonDto;
 import com.example.be.lesson.dto.UpdateLessonDto;
 import com.example.be.lesson.entity.LessonEntity;
 import com.example.be.lesson.repository.LessonRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +47,16 @@ public class LessonService {
                         .id(lessonEntity.getId())
                         .content(lessonEntity.getContent())
                         .build()).toList();
+    }
+
+    // --- Paging & Sorting ---
+    public Page<LessonDto> getAllLessondPagenated(int page, int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("content").ascending());
+        Page<LessonEntity> lessonEntityPage = lessonRepository.findAll(pageable);
+        return lessonEntityPage.map(lessonEntity -> LessonDto.builder()
+                .id(lessonEntity.getId())
+                .content(lessonEntity.getContent())
+                .build());
     }
 
     // update lesson

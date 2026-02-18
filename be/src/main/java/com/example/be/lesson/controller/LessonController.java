@@ -4,6 +4,7 @@ import com.example.be.lesson.dto.CreateLessonDto;
 import com.example.be.lesson.dto.LessonDto;
 import com.example.be.lesson.dto.UpdateLessonDto;
 import com.example.be.lesson.service.LessonService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,15 @@ public class LessonController {
     }
 
     @GetMapping("/all")
-    ResponseEntity <List<LessonDto>> getAllLessond(){
+    ResponseEntity <List<LessonDto>> getAllLessons(){
         return ResponseEntity.ok(lessonService.getAllLessons());
+    }
+
+    @PostMapping("/v2-page")
+    ResponseEntity <Page<LessonDto>> getAllLessonsPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
+        return  ResponseEntity.ok(lessonService.getAllLessondPagenated(page, size));
     }
 
     @PostMapping("/create")
