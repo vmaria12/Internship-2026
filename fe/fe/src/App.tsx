@@ -4,6 +4,7 @@ import { createRouter, RouterProvider, createRoute } from "@tanstack/react-route
 import { Route as rootRoute } from "./root";
 import Welcome from "@/app/welcome/welcome";
 import { coursantRoute } from './app/coursant/layout';
+import { courseRoute } from './app/course/layout';
 
 export const queryClient = new QueryClient();
 
@@ -13,7 +14,7 @@ export const welcomeRoute = createRoute({
     component: Welcome,
 })
 
-const routeTree = rootRoute.addChildren([welcomeRoute, coursantRoute])
+const routeTree = rootRoute.addChildren([welcomeRoute, coursantRoute, courseRoute])
 
 const router = createRouter({
     routeTree,
