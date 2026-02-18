@@ -3,9 +3,13 @@ package com.example.be.lesson.controller;
 import com.example.be.lesson.dto.CreateLessonDto;
 import com.example.be.lesson.dto.LessonDto;
 import com.example.be.lesson.dto.UpdateLessonDto;
+import com.example.be.lesson.exception.LessonAlreadyExistsException;
+import com.example.be.lesson.exception.SmallLengthLessonException;
 import com.example.be.lesson.service.LessonService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,11 +47,27 @@ public class LessonController {
         return  ResponseEntity.ok(lessonService.getFilteredLessons(content));
     }
 
+
+ // ******************** Exception //
     @PostMapping("/create")
     ResponseEntity <Void> createLesson(@RequestBody CreateLessonDto createLessonDto){
         lessonService.createLesson(createLessonDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @ExceptionHandler(LessonAlreadyExistsException.class)
+    public ResponseEntity<String> handleErr(LessonAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(SmallLengthLessonException.class)
+    public ResponseEntity<String> hanslerErrorSmallLength(SmallLengthLessonException ex){
+        return ResponseEntity.status(HttpStatus.LENGTH_REQUIRED).body(ex.getMessage());
+    }
+    // ******************** Exception //
+
+
+
 
     @PatchMapping("/{id}")
     ResponseEntity <Void> updateLesson(@PathVariable UUID id, @RequestBody UpdateLessonDto updateLessonDto){

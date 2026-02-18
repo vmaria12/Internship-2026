@@ -4,6 +4,9 @@ import com.example.be.lesson.dto.CreateLessonDto;
 import com.example.be.lesson.dto.LessonDto;
 import com.example.be.lesson.dto.UpdateLessonDto;
 import com.example.be.lesson.entity.LessonEntity;
+import com.example.be.lesson.exception.LessonAlreadyExistsException;
+import com.example.be.lesson.exception.NoSuchLessonExistsException;
+import com.example.be.lesson.exception.SmallLengthLessonException;
 import com.example.be.lesson.repository.LessonRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,13 +30,24 @@ public class LessonService {
 
     // create lesson
     public void createLesson(CreateLessonDto createLessonDto){
+        // get lessonBy content
+        LessonEntity lessonEntityFounded = lessonRepository.getLessonEntityByContent(createLessonDto.content());
+        if(lessonEntityFounded !=null){
+            throw new LessonAlreadyExistsException("Exista deja aceasta lectie");
+        }
+        if(createLessonDto.content().length() <2){
+            throw new SmallLengthLessonException("Lungimea este prea mica!! <2 este necesara");
+        }
         LessonEntity lessonEntity = new LessonEntity();
         lessonEntity.setContent(createLessonDto.content());
         lessonRepository.save(lessonEntity);
     }
+
+
     // get lesson by Id
     public LessonDto getLessonById(UUID id){
-        LessonEntity lessonEntity = lessonRepository.findById(id).orElseThrow(()-> new RuntimeException("We cannot found the lesson"));
+        LessonEntity lessonEntity = lessonRepository.findById(id).orElseThrow(()->new NoSuchLessonExistsException("**Nu s-a gasit "));
+
         return LessonDto.builder()
                 .content(lessonEntity.getContent())
                 .id(lessonEntity.getId())
