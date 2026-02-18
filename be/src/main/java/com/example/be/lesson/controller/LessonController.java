@@ -37,6 +37,12 @@ public class LessonController {
         return  ResponseEntity.ok(lessonService.getAllLessondPagenated(page, size));
     }
 
+    @PostMapping("/filter")
+    ResponseEntity <List<LessonDto>> getFilteredLessond(
+            @RequestParam(defaultValue = "") String content) {
+        return  ResponseEntity.ok(lessonService.getFilteredLessons(content));
+    }
+
     @PostMapping("/create")
     ResponseEntity <Void> createLesson(@RequestBody CreateLessonDto createLessonDto){
         lessonService.createLesson(createLessonDto);

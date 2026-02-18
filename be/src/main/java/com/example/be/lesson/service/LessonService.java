@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,5 +73,27 @@ public class LessonService {
     public void deletelesson(UUID id){
         LessonEntity lessonEntity = lessonRepository.findById(id).orElseThrow(()-> new RuntimeException("We cannt found the lesson"));
         lessonRepository.delete(lessonEntity);
+    }
+
+
+
+
+    //Filter
+    public List<LessonDto> getFilteredLessons(String content) {
+        // Inițializăm cu o specificație care nu filtrează nimic (1=1)
+        Specification<LessonEntity> spec = (root, query, cb) -> cb.conjunction();
+
+        if (content != null && !content.isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(cb.lower(root.get("content")), "%" + content.toLowerCase() + "%")
+            );
+        }
+
+        return lessonRepository.findAll(spec).stream()
+                .map(lessonEntity -> LessonDto.builder()
+                        .id(lessonEntity.getId())
+                        .content(lessonEntity.getContent())
+                        .build())
+                .toList();
     }
 }
