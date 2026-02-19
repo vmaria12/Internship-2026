@@ -9,9 +9,7 @@ import {
     CommandShortcut,
 } from "@/components/ui/command"
 import {
-    Calculator,
     Calendar,
-    CreditCard,
     Grid,
     Settings,
     Smile,

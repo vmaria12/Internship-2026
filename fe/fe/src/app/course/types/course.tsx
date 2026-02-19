@@ -6,3 +6,10 @@ export type Course = {
     description: string,
     lessons: Lesson[],
 }
+
+export type CreateCourseBody = {
+    title: string,
+    description: string,
+}
+
+export type UpdateCourseBody = CreateCourseBody;
