@@ -20,11 +20,14 @@ const WelcomeAction = () => {
                     <p className="text-green-400">Adaugă, editează sau șterge cursuri pentru un cursant</p>
                 </Card>
             </Link>
-            <Card className="p-2">
-                <h2 className="text-red-400 font-normal">Lecții</h2>
-                <LayoutGrid className="size-12 text-red-400" />
-                <p className="text-red-400">Adaugă, editează sau șterge lecții pentru un curs</p>
-            </Card>
+
+            <Link to="/lessons">
+                <Card className="p-2">
+                    <h2 className="text-red-400 font-normal">Lecții</h2>
+                    <LayoutGrid className="size-12 text-red-400" />
+                    <p className="text-red-400">Adaugă, editează sau șterge lecții pentru un curs</p>
+                </Card>
+            </Link>
         </div >
     )
 }

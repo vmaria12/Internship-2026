@@ -5,6 +5,7 @@ import { Route as rootRoute } from "./root";
 import Welcome from "@/app/welcome/welcome";
 import { coursantRoute } from './app/coursant/layout';
 import { courseRoute } from './app/course/layout';
+import { lessonRoute } from './app/lesson/layout';
 
 export const queryClient = new QueryClient();
 
@@ -14,7 +15,7 @@ export const welcomeRoute = createRoute({
     component: Welcome,
 })
 
-const routeTree = rootRoute.addChildren([welcomeRoute, coursantRoute, courseRoute])
+const routeTree = rootRoute.addChildren([welcomeRoute, coursantRoute, courseRoute, lessonRoute])
 
 const router = createRouter({
     routeTree,
