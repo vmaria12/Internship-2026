@@ -1,4 +1,6 @@
 package com.example.be.course.service;
+import com.example.be.course.exception.CourseAlreadyExistsException;
+import com.example.be.course.exception.CourseNotFoundException;
 import org.hibernate.query.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,12 @@ public class CourseService {
 
     //CRUD
     public UUID createCourse(CreateCourseDto createCourseDto){
+        // search course
+        List<CourseEntity> courseEntityListWithSameTitleAndDescription = courseRepository.findCourseEntitiesByDescriptionAndTitle(createCourseDto.description(), createCourseDto.title());
+        if(!courseEntityListWithSameTitleAndDescription.isEmpty()){
+            throw  new CourseAlreadyExistsException("Exista un curs similar");
+        }
+
         CourseEntity courseEntity  = new CourseEntity();
         courseEntity.setDescription(createCourseDto.description());
         courseEntity.setTitle(createCourseDto.title());
@@ -99,7 +107,8 @@ public class CourseService {
 
     // update a specific course
     public void updateCourse(UUID id, UpdateCourseDto updateCourseDto) {
-        var foundedCourse = courseRepository.findById(id).orElseThrow(() -> new RuntimeException("We cannot found the course. Try again"));
+        var foundedCourse = courseRepository.findById(id).orElseThrow(() ->
+                new CourseNotFoundException("Curs negasit, incercati din nou"));
 
         if(updateCourseDto.title()!=null){
             foundedCourse.setTitle(updateCourseDto.title());

@@ -35,7 +35,7 @@ declare module '@tanstack/react-router' {
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <div className="flex flex-col-2">
+            <div className="w-full min-h-screen">
                 <RouterProvider router={router} />
                 <ReactQueryDevtools initialIsOpen={false} />
             </div>

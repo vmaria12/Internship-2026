@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 
 const CourseLayout = () => {
     return (
-        <div className="w-screen h-screen  p-12 ">
+        <div className="w-full h-full  p-12 ">
             <div className="flex justify-between">
                 <h1 className="text-green-400 ">Cursuri</h1>
                 <Button><Plus />Adaugă</Button>

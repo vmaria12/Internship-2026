@@ -3,11 +3,14 @@ package com.example.be.course.controller;
 import com.example.be.course.dto.CourseDto;
 import com.example.be.course.dto.CreateCourseDto;
 import com.example.be.course.dto.UpdateCourseDto;
+import com.example.be.course.exception.CourseAlreadyExistsException;
+import com.example.be.course.exception.CourseNotFoundException;
 import com.example.be.course.service.CourseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,11 +50,19 @@ public class CourseController {
     public ResponseEntity<CourseDto> getCourseById(@PathVariable UUID id){
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<String> exceptionNotFound(CourseNotFoundException ex){
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Void> createCourse(@RequestBody CreateCourseDto courseDto){
         courseService.createCourse(courseDto);
         return ResponseEntity.ok().build();
+    }
+    @ExceptionHandler(CourseAlreadyExistsException.class)
+    public ResponseEntity<String> exceptionAlreadyExist(CourseAlreadyExistsException ex){
+        return  ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
     @PatchMapping("/{id}")
