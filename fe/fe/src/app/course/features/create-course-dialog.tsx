@@ -6,19 +6,22 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Plus } from "lucide-react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import type { CreateCourseBody } from "../types/course"
 import createCourseMutation from "@/app/api/course/create-course"
+import useDismissModal from "@/hooks/useDismissModal"
 
 const CreateCourseDialog = () => {
 
+    const { dismiss } = useDismissModal();
     // P1: zod
     const courseSchema = z.object({
         title: z.string().min(2, 'Titlul trebuie sa aiba minim 2 caractere'),
         description: z.string().min(2, 'Descrierea trebuie sa aiba minim 2 caractere')
     })
 
+    // type
+    type CourseSchema = z.infer<typeof courseSchema>
     // register
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<CourseSchema>({
         resolver: zodResolver(courseSchema),
         values: {
             title: '',
@@ -29,10 +32,15 @@ const CreateCourseDialog = () => {
     // mutation
     const mutation = createCourseMutation();
 
-    const onSubmit = (data: CreateCourseBody) => {
+    const onSubmit = (data: CourseSchema) => {
+        if (!isValid) {
+            alert("Formular invalid");
+            return;
+        }
         mutation.mutate(data, {
             onSuccess: () => {
                 reset();
+                dismiss();
             }
         });
     }
@@ -55,11 +63,8 @@ const CreateCourseDialog = () => {
                     <Textarea placeholder="Descriere" {...register('description')} />
                     {errors.description && <p className="text-red-500 text-xs">{errors.description.message}</p>}
 
-
                     <DialogFooter>
-                        <DialogClose disabled={mutation.isPending} asChild>
-                            <Button type="submit">Adaugă curs</Button>
-                        </DialogClose>
+                        <Button type="submit">Adaugă curs</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

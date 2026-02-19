@@ -6,19 +6,22 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Edit2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import type { Course, UpdateCourseBody } from "../types/course"
+import type { Course } from "../types/course"
 import editCourseMutation from "@/app/api/course/edit-course"
+import useDismissModal from "@/hooks/useDismissModal"
 
 const EditCourseDialog = ({ id, course }: { id: string, course: Course }) => {
-
+    const { dismiss } = useDismissModal();
     // 1, zod
     const editCourseSchema = z.object({
         title: z.string().min(2, 'Titlul trebuie sa aiba minim 2 caractere'),
         description: z.string().min(2, 'Descrierea trebuie sa aiba minim 2 caractere')
     })
 
+    // type
+    type EditCourseSchema = z.infer<typeof editCourseSchema>
     // react hook form
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<EditCourseSchema>({
         resolver: zodResolver(editCourseSchema),
         values: {
             title: course.title,
@@ -29,10 +32,15 @@ const EditCourseDialog = ({ id, course }: { id: string, course: Course }) => {
     // mutation
     const mutation = editCourseMutation();
 
-    const onSubmit = (data: UpdateCourseBody) => {
+    const onSubmit = (data: EditCourseSchema) => {
+        if (!isValid) {
+            alert("Formular invalid");
+            return;
+        }
         mutation.mutate({ id, body: data }, {
             onSuccess: () => {
                 reset();
+                dismiss();
             }
         });
     }
@@ -55,10 +63,7 @@ const EditCourseDialog = ({ id, course }: { id: string, course: Course }) => {
                         {errors.description && <p className="text-red-500 text-xs">{errors.description.message}</p>}
                     </DialogDescription>
                     <DialogFooter>
-                        <DialogClose asChild>
-                            <Button type="submit">Editează</Button>
-                        </DialogClose>
-
+                        <Button type="submit">Editează</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

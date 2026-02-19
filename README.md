@@ -8,16 +8,31 @@
 
 --------
 
-\#####Links FE
+Links FE
 
 
 
-Tailwind:** https://pagedone.io/docs/grids
-react hook form: https://ui.shadcn.com/docs/forms/react-hook-form
-tailwind: https://pagedone.io/docs/grids 
-lucide: https://lucide.dev/icons/ 
-colors: https://ui.shadcn.com/colors
-tipograpty: https://pagedone.io/docs/typography 
+Links:
+
+1. react hook form: https://ui.shadcn.com/docs/forms/react-hook-form
+
+2. tailwind: https://pagedone.io/docs/grids 
+
+3. lucide: https://lucide.dev/icons/ 
+
+4. colors: https://ui.shadcn.com/colors
+
+5. tipograpty: https://pagedone.io/docs/typography 
+
+6.Extensie chrome: https://chromewebstore.google.com/detail/tanstack-query-devtools/annajfchloimdhceglpgglpeepfghfai 
+
+7.Extensie React Developer Too; https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi 
+
+8. In proiect- TanStack Router: https://tanstack.com/router/v1/docs/devtools 
+
+9.🚀Close Dialog:==>useDismissModal⇒ https://github.com/shadcn-ui/ui/discussions/1504 
+sau 
+<DialogClose asChild> cand se poate :) 
 
 
 ---------
@@ -26,7 +41,7 @@ tipograpty: https://pagedone.io/docs/typography
 
 
 
-\####Use cases:
+Use cases:
 
 
 

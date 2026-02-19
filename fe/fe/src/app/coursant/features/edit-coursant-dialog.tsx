@@ -7,9 +7,11 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { Coursant } from "../types/coursant"
 import useEditCoursantMutation from "@/app/api/coursant/edit-coursant"
+import useDismissModal from "@/hooks/useDismissModal"
 
 const EditCoursantDialog = ({ id, coursant }: { id: string, coursant: Coursant }) => {
 
+    const { dismiss } = useDismissModal();
     // validation schema
     const coursantSchema = z.object({
         firstName: z.string().min(2, "First name must be at least 2 characters long"),
@@ -19,7 +21,7 @@ const EditCoursantDialog = ({ id, coursant }: { id: string, coursant: Coursant }
 
     type EditCoursantForm = z.infer<typeof coursantSchema>
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<EditCoursantForm>({
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<EditCoursantForm>({
         resolver: zodResolver(coursantSchema),
         values: {
             firstName: coursant.firstName,
@@ -33,8 +35,16 @@ const EditCoursantDialog = ({ id, coursant }: { id: string, coursant: Coursant }
     const mutation = useEditCoursantMutation()
 
     const onSubmit = (data: EditCoursantForm) => {
-        mutation.mutate({ id, body: data })
-        reset()
+        if (!isValid) {
+            alert("Formular invalid");
+            return;
+        }
+        mutation.mutate({ id, body: data }, {
+            onSuccess: () => {
+                reset()
+                dismiss();
+            }
+        })
     }
 
 
@@ -61,10 +71,8 @@ const EditCoursantDialog = ({ id, coursant }: { id: string, coursant: Coursant }
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <DialogClose asChild>
-                            <Button className="!bg-green-400 !text-black" type="submit"> <PencilIcon className="text-black" />
-                                {mutation.isPending ? "Editing..." : "Edit"}</Button>
-                        </DialogClose>
+                        <Button className="!bg-green-400 !text-black" type="submit"> <PencilIcon className="text-black" />
+                            {mutation.isPending ? "Editing..." : "Edit"}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

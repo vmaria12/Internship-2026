@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import createCoursantMutation from "@/app/api/coursant/create-coursant"
 import { PlusIcon } from "lucide-react"
+import useDismissModal from "@/hooks/useDismissModal"
 
 const CreateCoursantDialog = () => {
+    const { dismiss } = useDismissModal();
     // 1. Definirea schemei de validare cu Zod
     const coursantSchema = z.object({
         firstName: z.string().min(2, "First name must be at least 2 characters long"),
@@ -18,7 +20,7 @@ const CreateCoursantDialog = () => {
     type CreateCoursantForm = z.infer<typeof coursantSchema>
 
     // 2. Extrage handleSubmit și formState pentru erori
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateCoursantForm>({
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<CreateCoursantForm>({
         resolver: zodResolver(coursantSchema),
     })
 
@@ -26,10 +28,15 @@ const CreateCoursantDialog = () => {
 
     // 3. Funcția care primește datele DEJA validate
     const onSubmit = (data: CreateCoursantForm) => {
+        if (!isValid) {
+            alert("Formular invalid");
+            return;
+        }
         mutation.mutate(data, {
             onSuccess: () => {
                 alert("Coursant created successfully");
                 reset();
+                dismiss();
             }
         });
     }
@@ -67,11 +74,10 @@ const CreateCoursantDialog = () => {
 
                     <DialogFooter>
                         {/* 6. Buton de tip "submit" care declanșează handleSubmit */}
-                        <DialogClose asChild>
-                            <Button type="submit" disabled={mutation.isPending}>
-                                {mutation.isPending ? "Submitting..." : "Submit"}
-                            </Button>
-                        </DialogClose>
+                        <Button type="submit" disabled={mutation.isPending}>
+                            {mutation.isPending ? "Submitting..." : "Submit"}
+                        </Button>
+
                     </DialogFooter>
                 </form>
             </DialogContent>
