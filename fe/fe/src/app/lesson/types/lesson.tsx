@@ -6,3 +6,13 @@ export type Lesson = {
 export type CreateLessonBody = {
     content: string,
 }
+
+
+export type PaginatedLessons = {
+    content: Lesson[],
+    pageable: {
+        pageNumber: number,
+        pageSize: number,
+    }
+    totalPages: number,
+}
