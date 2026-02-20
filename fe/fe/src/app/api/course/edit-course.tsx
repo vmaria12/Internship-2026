@@ -6,7 +6,6 @@ import axios from "axios";
 interface UpdateCourseParams {
     id: string,
     body: UpdateCourseBody,
-
 }
 const editCourse = async (id: string, data: UpdateCourseBody): Promise<UpdateCourseBody> => {
     const result = await axios.patch<UpdateCourseBody>(`/course/${id}`, data)

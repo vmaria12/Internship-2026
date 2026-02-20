@@ -7,6 +7,14 @@ export type Course = {
     lessons: Lesson[],
 }
 
+export type PaginatedCourse={
+    content:Course[];
+    pageable:{
+        pageNumber: number
+    };
+    totalPages: number
+}
+
 export type CreateCourseBody = {
     title: string,
     description: string,

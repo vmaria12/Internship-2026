@@ -10,7 +10,7 @@ const getPaginatedLessons = async ({ page, size }: { page: number, size: number 
 // use query
 const usePaginatedLessons = ({ page, size }: { page: number, size: number }) => {
     return useQuery({
-        queryKey: ['paginated-lessons', page, size],
+        queryKey: ['lessons', page, size],
         queryFn: () => getPaginatedLessons({ page, size })
     })
 }
