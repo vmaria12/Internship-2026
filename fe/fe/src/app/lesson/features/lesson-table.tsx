@@ -3,6 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Pencil, Trash } from "lucide-react"
 import useGetAllLessons from "@/app/api/lesson/get-all-lessons"
 import { Spinner } from "@/components/ui/spinner"
+import DeleteLessonDialog from "./delete-lesson-delete"
+import EditLessonDialog from "./edit-lesson-dialog"
 
 const LessonTable = () => {
     const { data, isLoading, error } = useGetAllLessons()
@@ -28,20 +30,8 @@ const LessonTable = () => {
                     <TableRow key={lesson.id}>
                         <TableCell>{lesson.content}</TableCell>
                         <TableCell className="flex gap-2">
-                            <Button
-                                variant="default"
-                                size="sm"
-                                className="!bg-blue-400 !rounded-full"
-                            >
-                                <Pencil />
-                            </Button>
-                            <Button
-                                variant="default"
-                                size="sm"
-                                className="!bg-red-400 !rounded-full"
-                            >
-                                <Trash />
-                            </Button>
+                            <EditLessonDialog id={lesson.id} lesson={lesson} />
+                            <DeleteLessonDialog id={lesson.id} />
                         </TableCell>
                     </TableRow>
                 ))}
