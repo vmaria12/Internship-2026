@@ -42,6 +42,7 @@ const EditCourseDialog = ({ id, course }: { id: string, course: Course }) => {
                 reset();
                 dismiss();
             }
+        
         });
     }
 
